@@ -1,0 +1,15 @@
+{% if recent_proteins %}
+	<ul>
+	{% for protein in recent_proteins %}
+		<li>
+			<a href="{% url 'finder:details' protein.id %}"> {{ protein.description }}
+			</a>
+		</li>
+	{% endfor %}
+	</ul>
+	
+
+{% else %}
+<p> No proteins found </p>
+
+{% endif %}

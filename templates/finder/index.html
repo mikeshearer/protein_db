@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block body_content %}
+  {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+        {% endfor %}
+    </ul>
+  {% endif %}
+
+
+  <div>
+    <h1>Directions</h1>
+	    <ol>
+	        <li>Register an account above</li>
+	        <li>Submit a DNA sequence into the search bar above</li>
+	        <li>This process can take some time, view your search history to see past results</li>
+	    </ol>
+    </div>
+    {% if user.is_authenticated %}
+    <div>
+    	{% include "finder/table.html" %}
+    </div>
+   	{% endif %}
+{% endblock body_content %}

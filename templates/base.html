@@ -1,0 +1,73 @@
+{# HTML5 declaration #}
+<!DOCTYPE html>
+<html>
+    {# Make modifiable head elements #}
+    <div class="header">
+        <head>
+        <h1>Protein database</h1>
+            {% load static %}
+            <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+            <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+            <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+            <link rel="stylesheet" href="{% static 'css/app.css' %}">
+            <title>{% block title %}Home {% endblock title %} | Protein DB</title>
+            {% block head_favicon %}
+                <link rel="icon" type="image/png"
+                      href="{{ STATIC_URL }}images/favicon.ico">
+            {% endblock head_favicon %}
+            {% block head_meta %}
+                {% block head_meta_charset %}
+                    <meta http-equiv="Content-Type"
+                          content="text/html; charset=utf-8" />
+                {% endblock head_meta_charset %}
+                {% block head_meta_contentlanguage %}
+                    <meta http-equiv="Content-Language" value="en-US" />
+                {% endblock head_meta_contentlanguage %}
+                {% block head_meta_viewport %}
+                    <meta name="viewport"
+                          content="width=device-width, initial-scale=1.0">
+                {% endblock head_meta_viewport %}
+            {% endblock head_meta %}
+            {% block head_css %}
+                {% block head_css_site %}
+                    <!-- <link href="{{ STATIC_URL }}css/bootstrap.min.css"
+                          rel="stylesheet" media="screen">
+                    <link href="{{ STATIC_URL }}css/app.css"
+                          rel="stylesheet" media="screen"> -->
+                {% endblock head_css_site %}
+                {% block head_css_section %}{% endblock head_css_section %}
+                {% block head_css_page %}{% endblock head_css_page %}
+            {% endblock head_css %}
+        </head>
+    </div>
+    <div class="topnav">
+        <div style="width: 50%; height: 50%; float:left;">
+            {% if user.is_authenticated %}
+            <form method="POST" action="/finder/search/">
+            {% csrf_token %}
+                <label for="dna_sequence" style="color:white;">DNA Sequence</label>
+                <input type="text" id="dna_sequence" name="dna_sequence" pattern="^[CAGTcagt]+$">
+                <input type="submit" value="Submit">
+            {% endif %}
+            </form>
+        </div>
+        <div style="width: 50%; height: 50%; float:right;">
+            <a class="active" href="{% url 'finder:index' %}">Home</a>
+            {% if user.is_authenticated %}
+            <a href="{% url 'finder:search_history' %}">Search History</a>
+            <a href="{% url 'finder:logout' %}">Logout</a>
+            {% else %}z
+            <a href="{% url 'finder:login' %}">Login</a>
+            <a href="{% url 'finder:signup' %}">Register</a>
+            {% endif %}
+        </div>
+    </div>
+<body>
+    <div class="body">
+    {% block body_content %}
+    {% endblock body_content %}
+    </div>
+    
+
+</body>
+</html>

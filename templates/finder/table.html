@@ -1,0 +1,25 @@
+{% block body_content %}
+  <div class="body">
+    <h2>Search History</h2>
+
+    {% if data %}
+      <table class="table">
+        <tr>
+          <th>Input Sequence</th>
+          <th>Transcribed Sequence</th>
+          <th>Matched Protein</th>
+          <th>Matched Start Index</th>
+          <th>Timestamp</th>
+        </tr>
+      {% for datum in data %}
+        <tr>
+          <td>{{ datum.dna_sequence }}</td>
+          <td>{{ datum.transcribed_sequence }}</td>
+          <td>{{ datum.matched_protein }}</td>
+          <td>{{ datum.protein_matched_beginning_index }}</td>
+          <td>{{ datum.search_timestamp }}</td>
+        </tr>
+      {% endfor %}
+      </table>
+    {% endif %}
+{% endblock body_content %}
