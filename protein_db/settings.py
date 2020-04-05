@@ -38,7 +38,7 @@ ALLOWED_HOSTS = [
     '0.0.0.0',
     'localhost',
     '127.0.0.1',
-    'nameofapp.herokuapp.com'
+    'radiant-inlet-92518.herokuapp.com'
 ]
 
 
