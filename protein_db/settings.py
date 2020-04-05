@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
+import dj_database_url
+
+import django_heroku
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -20,12 +24,22 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'n5ih%%kl*w(s6@r%pnu1ucmh3yh!b@to*n5r3^mb@$6g%(hc3_'
+# SECRET_KEY = 'n5ih%%kl*w(s6@r%pnu1ucmh3yh!b@to*n5r3^mb@$6g%(hc3_'
+SECRET_KEY = os.environ.get('SECRET_KEY')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '0.0.0.0',
+    'localhost',
+    '127.0.0.1',
+    'nameofapp.herokuapp.com'
+]
 
 
 # Application definition
@@ -39,6 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'background_task',
+    'whitenoise.runserver_nostatic',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'protein_db.urls'
@@ -85,6 +101,7 @@ WSGI_APPLICATION = 'protein_db.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # 'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'protein_db',
         'USER': 'tester',
         'PASSWORD': 'test_password',
@@ -92,6 +109,9 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
 
 
 # Password validation
@@ -132,8 +152,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, "static"),
-# ]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR,'protein_db/static')
+
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_URL = '/media/'
+]
+
+django_heroku.settings(locals())

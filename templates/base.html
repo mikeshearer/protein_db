@@ -4,17 +4,13 @@
     {# Make modifiable head elements #}
     <div class="header">
         <head>
-        <h1>Protein database</h1>
+        <h1>Protein Database</h1>
             {% load static %}
             <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
             <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
             <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
             <link rel="stylesheet" href="{% static 'css/app.css' %}">
             <title>{% block title %}Home {% endblock title %} | Protein DB</title>
-            {% block head_favicon %}
-                <link rel="icon" type="image/png"
-                      href="{{ STATIC_URL }}images/favicon.ico">
-            {% endblock head_favicon %}
             {% block head_meta %}
                 {% block head_meta_charset %}
                     <meta http-equiv="Content-Type"
