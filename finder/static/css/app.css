@@ -44,12 +44,14 @@
 	font-family: arial, sans-serif;
 	border-collapse: collapse;
 	width: 75%;
+	table-layout: fixed;
 }
  
 .table td {
 	border: 3px solid #333;
 	text-align: left;
 	padding: 8px;
+	overflow: hidden;
 }
 
 .table th {

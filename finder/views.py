@@ -29,7 +29,6 @@ def _get_user_id(request):
 def _get_user_by_id(user_id):
 	return User.objects.filter(id=user_id)[0]
 
-
 """ Classes """
 
 class ProteinDetailView(generic.DetailView):

@@ -19,8 +19,6 @@ def sequence_matcher(user_id, input_dna):
 
 	db = cache.get("proteins")
 
-	# protein_match = next((protein for protein in proteins if protein['sequence'].find(transcribed_protein.__str__()) != -1), None)
-
 	for protein in db:
 		match_start_index = protein['sequence'].find(transcribed_protein.__str__())
 		if match_start_index != -1:
